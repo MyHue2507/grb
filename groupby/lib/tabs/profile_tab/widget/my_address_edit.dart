@@ -35,11 +35,13 @@ class MyAddressEditState extends State<MyAddressEdit> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(150, 7, 239, 204),
-        title: Text('My Address'),
+        backgroundColor: Color.fromARGB(170, 0, 204, 204),
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Địa chỉ của tôi',style: TextStyle(fontSize: 15),),
         actions: <Widget>[
           FlatButton(
-            child: Text('Add new'),
+            child: Text('Thêm',style: TextStyle(fontSize: 13),),
             onPressed: () {
               Navigator.push(
                 context,

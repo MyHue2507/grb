@@ -170,76 +170,71 @@ class _TabsScreenState extends State<TabsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.blue,
-        accentColor: Colors.red,
-      ),
-      home: Scaffold(
-        bottomNavigationBar: Material(
-            color: Colors.white,
-            child: Container(
-              height: 60.0,
-              child: TabBar(
-                controller: controller,
-              indicatorColor: Color.fromARGB(170, 0, 204, 204),
-                labelColor: Color.fromARGB(170, 0, 204, 204),
-                unselectedLabelColor: Colors.grey,
-                tabs: <Tab>[
-                  Tab(
-                    icon: Container(
-                      child: Icon(
-                        Icons.home,
-                        size: 30,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+          home: Scaffold(
+          bottomNavigationBar: Material(
+              color: Colors.white,
+              child: Container(
+                height: 60.0,
+                child: TabBar(
+                  controller: controller,
+                indicatorColor: Color.fromARGB(170, 0, 204, 204),
+                  labelColor: Color.fromARGB(170, 0, 204, 204),
+                  unselectedLabelColor: Colors.grey,
+                  tabs: <Tab>[
+                    Tab(
+                      icon: Container(
+                        child: Icon(
+                          Icons.home,
+                          size: 28,
+                        ),
+                        margin: EdgeInsets.only(bottom: 0.0),
                       ),
-                      margin: EdgeInsets.only(bottom: 0.0),
+                      text: "Trang chủ",
                     ),
-                    text: "Trang chủ",
-                  ),
-                  Tab(
-                    icon: Container(
-                      child: Icon(
-                        Icons.shopping_cart,
-                        size: 30,
+                    Tab(
+                      icon: Container(
+                        child: Icon(
+                          Icons.shopping_cart,
+                          size: 28,
+                        ),
+                        margin: EdgeInsets.only(bottom: 0.0),
                       ),
-                      margin: EdgeInsets.only(bottom: 0.0),
+                      text: "Giỏ hàng",
                     ),
-                    text: "Giỏ hàng",
-                  ),
-                  Tab(
-                    icon: Container(
-                      child: Icon(
-                        Icons.perm_identity,
-                        size: 30,
+                    Tab(
+                      icon: Container(
+                        child: Icon(
+                          Icons.perm_identity,
+                          size: 28,
+                        ),
+                        margin: EdgeInsets.only(bottom: 0.0),
                       ),
-                      margin: EdgeInsets.only(bottom: 0.0),
-                    ),
-                    text: "Tài khoản",
-                  )
-                ],
+                      text: "Tài khoản",
+                    )
+                  ],
+                ),
+              )),
+          body: TabBarView(
+            controller: controller,
+            children: <Widget>[
+              HomeScreen(
+                appBloc: widget.appBloc,
               ),
-            )),
-        body: TabBarView(
-          controller: controller,
-          children: <Widget>[
-            HomeScreen(
-              appBloc: widget.appBloc,
-            ),
-            CartScreen(
-              appBloc: widget.appBloc,
-            ),
-            _isLogged
-                ? LoggedScreen(
-                    appBloc: widget.appBloc,
-                  )
-                : ProfileScreen(
-                    appBloc: widget.appBloc,
-                  )
-          ],
+              CartScreen(
+                appBloc: widget.appBloc,
+              ),
+              _isLogged
+                  ? LoggedScreen(
+                      appBloc: widget.appBloc,
+                    )
+                  : ProfileScreen(
+                      appBloc: widget.appBloc,
+                    )
+            ],
+          ),
         ),
-      ),
     );
   }
 }

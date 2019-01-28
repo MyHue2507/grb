@@ -117,61 +117,66 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Quên mật khẩu'),
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Quên Mật Khẩu',style: TextStyle(fontSize: 15),),
         backgroundColor: colorIsChoosed,
       ),
       body: Center(
-        child: Card(
-          margin: EdgeInsets.all(7),
-          child: Container(
-            margin: EdgeInsets.only(left: 8, right: 8),
-            child: ListView(
-              children: <Widget>[
-                Center(
-                    child: Container(
-                  child: Text(
-                    'QUÊN MẬT KHẨU',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                )),
-                Text(
-                  'Nếu bạn quên mật khẩu, hãy nhập địa chỉ email của bạn vào ô này và nhấp vào khôi phục mật khẩu. Bạn sẽ nhật được một mật khẩu mới và một liên kết để đăng nhập. Bạn có thể thay đổi sau.',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                TextFormField(
-                  controller: _emailTextController,
-                  decoration: InputDecoration(
-                    labelText: "Nhập email",
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: RaisedButton(
-                      elevation: 0,
-                      child: Text(
-                        'KHÔI PHỤC MẬT KHẨU',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                          widget.forgotPass
-                              .postForgotPassword(_emailTextController.text)
-                              .then((onValue) {
-                            showDialog(
-                                context: context,
-                                child: AddItemDialog(message: onValue));
-                          });
-                      },
-
-                      color: colorIsChoosed,
+        child: Container(
+          height: 500,
+          child: Card(
+            margin: EdgeInsets.all(7),
+            child: Container(
+              margin: EdgeInsets.only(left: 8, right: 8),
+              child: ListView(
+                children: <Widget>[
+                  Center(
+                      child: Container(
+                    child: Text(
+                      'QUÊN MẬT KHẨU',
+                      style: TextStyle(fontSize: 17),
                     ),
-                    height: 50,
-                    width: 400,
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                  )),
+                  Text(
+                    'Nếu bạn quên mật khẩu, hãy nhập địa chỉ email của bạn vào ô này và nhấp vào khôi phục mật khẩu. Bạn sẽ nhật được một mật khẩu mới và một liên kết để đăng nhập. Bạn có thể thay đổi sau.',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
-                ),
-              ],
+                  TextFormField(
+                    controller: _emailTextController,
+                    decoration: InputDecoration(
+                      labelText: "Nhập email",
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 15),
+                      child: RaisedButton(
+                        elevation: 0,
+                        child: Text(
+                          'KHÔI PHỤC MẬT KHẨU',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                            widget.forgotPass
+                                .postForgotPassword(_emailTextController.text)
+                                .then((onValue) {
+                              showDialog(
+                                  context: context,
+                                  child: AddItemDialog(message: onValue));
+                            });
+                        },
+
+                        color: colorIsChoosed,
+                      ),
+                      height: 50,
+                      width: 400,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

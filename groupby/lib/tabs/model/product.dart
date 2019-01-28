@@ -1,3 +1,4 @@
+import 'package:bigdeals2/tabs/model/image_product_detail.dart';
 import 'package:meta/meta.dart';
 class ProductsItem {
   int id;
@@ -11,7 +12,8 @@ class ProductsItem {
   int amount_target;
   int amount_sale;
   int quantity ;
-  List<String> image_list;
+  // List<ImageProductDetail> image_list;
+    // List<String> image_list;
   ProductsItem(
       {this.id,
       this.name,
@@ -23,7 +25,8 @@ class ProductsItem {
       this.amount_sale,
       this.description,
       this.current_deal_id,
-      this.image_list});
+      // this.image_list
+      });
   factory ProductsItem.internalFromJson(Map jsonMap) {
     return ProductsItem(
       id: jsonMap["id"] as int,
@@ -36,9 +39,14 @@ class ProductsItem {
       amount_sale: jsonMap["amount_sale"] as  int,
       description: jsonMap["description"] as String,
       current_deal_id: jsonMap["current_deal_id"] as int ,
-      image_list :(jsonMap["image_list"] as List<String>)
-          //  .map<String>((value) => value. toString())
-          //  .toList(),
+      // image_list :(jsonMap["image_list"] as List<String>)
+      // image_list: ((jsonMap["image_list"]) as List<dynamic>)
+      // .map<String>((value) => value. toString())
+      //      .toList(),
+      //     .cast<Map<String, dynamic>>()
+      //     .map<ImageProductDetail>((value) => ImageProductDetail.internalFromJson(value))
+      //     .toList(),
+           
     );
   }
 }

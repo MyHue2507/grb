@@ -4,81 +4,110 @@ import 'package:redux/redux.dart';
 import 'package:bigdeals2/tabs/tabs.dart';
 import 'package:bigdeals2/app_bloc.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   AppBloc appBloc;
+  CartScreen({Key key, this.appBloc}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return CartScreenState();
+  }
+}
+
+class CartScreenState extends State<CartScreen> {
   ShipFee shipFee = ShipFee();
   Address address = Address();
-  CartScreen({Key key, this.appBloc}) : super(key: key);
+  String money;
+
   final Store<AppStateCart> store = Store<AppStateCart>(
     appReducer,
     initialState: AppStateCart.initial(),
   );
 
   @override
-  Widget build(BuildContext context) => StoreConnector<AppStateCart, ViewModel>(
-      converter: (Store<AppStateCart> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) => Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            backgroundColor: Color.fromARGB(170, 0, 204, 204),
-            title: Text('Giỏ Hàng'),
-          ),
-          bottomNavigationBar: viewModel.items?.length != 0
-              ? MaterialButton(
-                  child: Text(
-                    'Đặt Hàng',
-                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  ),
-                  height: 50.0,
-                  minWidth: double.infinity,
-                  color: Color.fromARGB(170, 0, 204, 204),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ShipmentDetails(
-                                  appBloc: appBloc,
-                                  money: sum(viewModel.items),
-                                  products: viewModel.items,
-                                  address: address,
-                                )));
-                  },
-                )
-              : null,
-          body: Stack(
-            alignment: Alignment(1.0, 1.0),
-            children: <Widget>[
-              ListView(
-                children: viewModel.items.map((product) {
-                  return CartItem(product);
-                }).toList(),
+  Widget build(BuildContext context) {
+    return StoreConnector<AppStateCart, ViewModel>(
+        converter: (Store<AppStateCart> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          // setState(() {
+            money = sum(viewModel.items).toString();
+          // });
+          return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Color.fromARGB(170, 0, 204, 204),
+                title: Text('Giỏ Hàng', style: TextStyle(fontSize: 15)),
               ),
-              viewModel.items?.length != 0
-                  ? Container(
-                      height: 50.0,
-                      width: double.infinity,
-                      child: Card(
-                          child: Row(
+              bottomNavigationBar: Container(
+                margin: EdgeInsets.all(5.0),
+                child: viewModel.items?.length != 0
+                    ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('Tổng cộng : '),
-                          Text(
-                            sum(viewModel.items).toString(),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'Tổng tiền: ',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w800),
+                              ),
+                              Text(
+                                money,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
                           ),
+                          MaterialButton(
+                            elevation: 0,
+                            child: Text(
+                              'Đặt Hàng',
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.white),
+                            ),
+                            height: 40.0,
+                            // minWidth: double.infinity,
+                            color: Color.fromARGB(170, 0, 204, 204),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShipmentDetails(
+                                            appBloc: widget.appBloc,
+                                            money: sum(viewModel.items),
+                                            products: viewModel.items,
+                                            address: address,
+                                          )));
+                            },
+                          )
                         ],
-                      )))
-                  : Container(),
-            ],
-          )));
+                      )
+                    : null,
+              ),
+              body: viewModel.items?.length != 0
+                  ? ListView(
+                      children: viewModel.items.map((product) {
+                        return CartItem(product);
+                      }).toList(),
+                    )
+                  : Center(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 150),
+                        child: Text(
+                          'Không có sản phẩm nào trong giỏ',
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                      ),
+                    ));
+        });
+  }
 }
 
 int sum(List<ProductsItem> items) {
   int money = 0;
   for (int i = 0; i < items?.length; i++) {
-    items[i].amount_sale >= items[i].amount_target
-        ? money += items[i].price_deal
-        : money += items[i].price;
+    items[i].amount_sale + items[i].quantity >= items[i].amount_target
+        ? money += items[i].price_deal * items[i].quantity
+        : money += items[i].price * items[i].quantity;
   }
 
   return money;
@@ -89,7 +118,7 @@ class ViewModel {
   final Function(ProductsItem) onAddItem;
   final Function(ProductsItem) onDeleteItem;
   final Function() removeAll;
-  ViewModel(this.items, this.onAddItem, this.onDeleteItem,this.removeAll);
+  ViewModel(this.items, this.onAddItem, this.onDeleteItem, this.removeAll);
 
   factory ViewModel.create(Store<AppStateCart> store) {
     List<ProductsItem> items = store.state.product;
@@ -97,6 +126,8 @@ class ViewModel {
       store.dispatch(AddItemAction(product));
     }, (ProductsItem product) {
       store.dispatch(RemoveItemAction(product));
-    }, (){store.dispatch(RemoveAll());});
+    }, () {
+      store.dispatch(RemoveAll());
+    });
   }
 }

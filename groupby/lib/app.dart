@@ -27,14 +27,10 @@ class _MyState extends State<MyApp> {
     return StoreProvider(
       store: store,
       child: new MaterialApp(
-        title: 'Flutter Demo',
-        // theme: new ThemeData(
-        //   primarySwatch:Colors.blue,
-        //   primaryColor:  Color(0x00ffcc),
-        //   accentColor: Color
-        // ),
+        title: 'GroupBuy',
         debugShowCheckedModeBanner: false,
         initialRoute: "/splash",
+        // home: SplashScreen(),
         routes: {
           "/splash": (context) => SplashScreen(),
           "/welcome": (context) => WelcomeScreen(),

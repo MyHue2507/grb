@@ -38,25 +38,29 @@ class ChangePassWordState extends State<ChangePassWord> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(150, 7, 239, 204),
-        title: Text('Change Password'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color.fromARGB(170, 0, 204, 204),
+        title: Text('Thay đổi mật khẩu',style: TextStyle(fontSize: 15),),
       ),
       body: Container(
-        padding: EdgeInsets.all(50.0),
+        padding: EdgeInsets.all(20.0),
         child: ListView(
           children: <Widget>[
             TextField(
                 controller: _currentPass,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Current password',
+                  hintText: 'Mật Khẩu hiện tại',
+                  hintStyle: TextStyle(fontSize: 13),
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 )),
             TextField(
               controller: _newPass,
               obscureText: true,
               decoration: InputDecoration(
-                hintText: 'New password',
+                hintText: 'Mật khẩu mới',
+                hintStyle: TextStyle(fontSize: 13),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               ),
             ),
@@ -64,17 +68,19 @@ class ChangePassWordState extends State<ChangePassWord> {
               controller: _confirmPass,
               obscureText: true,
               decoration: InputDecoration(
-                hintText: 'Comfirm password',
+                hintText: 'Nhập lại mật khẩu',
+                hintStyle: TextStyle(fontSize: 13),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 20.0, left: 85.0, right: 85.0),
               child: MaterialButton(
+                elevation: 0,
                 height: 50.0,
                 minWidth: 150.0,
-                child: Text('Update', style: TextStyle(fontSize: 20.0)),
-                color: Color.fromARGB(150, 7, 239, 204),
+                child: Text('Thay đổi', style: TextStyle(fontSize: 15.0,color: Colors.white),),
+                color: Color.fromARGB(170, 0, 204, 204),
                 onPressed: (() {
                   if (_confirmPass.text == _newPass.text)
                     widget.changePass

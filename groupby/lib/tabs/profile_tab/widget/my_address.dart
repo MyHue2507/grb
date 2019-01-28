@@ -38,11 +38,13 @@ class MyAddressState extends State<MyAddress> {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(150, 7, 239, 204),
-          title: Text('My Address'),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Color.fromARGB(170, 0, 204, 204),
+          title: Text('Địa chỉ của tôi',style: TextStyle(fontSize: 15),),
           actions: <Widget>[
             FlatButton(
-              child: Text('Add new'),
+              child: Text('Thêm',style: TextStyle(fontSize: 13,color: Colors.black),),
               onPressed: () {
                 Navigator.push(
                   context,

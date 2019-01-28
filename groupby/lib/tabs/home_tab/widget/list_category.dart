@@ -3,9 +3,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:bigdeals2/app_bloc.dart';
 
 class ListCategory extends StatefulWidget {
-  AppBloc appBloc ;
+  AppBloc appBloc;
   CategaryItem categary;
-  ListCategory({Key key ,this.categary ,this.appBloc}):super(key : key);
+  ListCategory({Key key, this.categary, this.appBloc}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -26,7 +26,7 @@ class ListCategoryState extends State<ListCategory> {
                 padding: EdgeInsets.only(left: 5.0),
                 child: Text(
                   widget.categary.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                 ),
               ),
               MaterialButton(
@@ -36,15 +36,28 @@ class ListCategoryState extends State<ListCategory> {
                       Text(
                         'Xem thêm',
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.w200),
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13),
                       ),
-                      Icon(Icons.chevron_right,color: Colors.blue,)
+                      Icon(
+                        Icons.chevron_right,
+                        color: Colors.blue,
+                      )
                     ]),
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ViewMore(categaryItem: widget.categary,appBloc: widget.appBloc,)));
+                          builder: (context) => ProductsOfCategories(
+                                id_categories: widget.categary.id,
+                                appBloc: widget.appBloc,
+                                name_categories: widget.categary.name,
+                              )));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ViewMore(categaryItem: widget.categary,appBloc: widget.appBloc,)));
                 },
               ),
             ],

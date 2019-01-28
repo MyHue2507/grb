@@ -42,30 +42,88 @@ class _CartItemState extends State<CartItem> {
                         Container(
                           width: 20.0,
                         ),
-                       Expanded(
-                         child:  Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                           Text(
-                              widget.product.name,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              widget.product.price_deal.toString(),
-                              style: TextStyle(
-                                  color: Color.fromARGB(150, 7, 239, 204),
-                                  fontWeight: FontWeight.w900),
-                            ),
-                            Text(widget.product.price.toString(),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                widget.product.name,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                widget.product.price_deal.toString(),
                                 style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w800)),
-                            Text('Số Lượng : ${widget.product.quantity}')
-                          ],
+                                    color: Color.fromARGB(150, 7, 239, 204),
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              Text(widget.product.price.toString(),
+                                  style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800)),
+                              // Text('Số Lượng : ${widget.product.quantity}'),
+                              Row(
+                                children: <Widget>[
+                                  Text('Số lượng '),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.grey)),
+                                    // color: Colors.white,
+                                    height: 25,
+                                    width: 25,
+                                    child: RaisedButton(
+                                      padding: EdgeInsets.only(right: 3),
+                                      onPressed: () {
+                                      if(widget.product.quantity == 1)
+                                         viewModel.onDeleteItem(widget.product);
+                                      else
+                                        setState(() {
+                                          widget.product.quantity =
+                                              widget.product.quantity - 1;
+                                        });
+                                      },
+                                      color: Colors.white,
+                                      child: Text("-"),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border(bottom: BorderSide(color: Colors.grey),top: BorderSide(color: Colors.grey))),
+                                    child: Container(
+                                        margin:
+                                            EdgeInsets.only(right: 10, left: 10,top: 5,bottom: 7),
+                                        child: Text(
+                                            ' ${widget.product.quantity}')),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.grey)),
+                                    // color: Colors.white,
+                                    height: 25,
+                                    width: 25,
+                                    child: RaisedButton(
+                                      padding: EdgeInsets.only(right: 3),
+                                      onPressed: () {
+                                      if(widget.product.quantity < 5)
+                                        setState(() {
+                                          widget.product.quantity =
+                                              widget.product.quantity + 1;
+                                        });
+                                      },
+                                      color: Colors.white,
+                                      child: Text("+"),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                       ),
                       ],
                     ),
                   ),

@@ -54,93 +54,89 @@ class ShipmentDetailsState extends State<ShipmentDetails> {
       converter: (Store<AppStateCart> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) => Scaffold(
             appBar: AppBar(
-              backgroundColor: Color.fromARGB(150, 7, 239, 204),
-              title: Text('Shipment Details'),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: Color.fromARGB(170, 0, 204, 204),
+              title: Text('Xác thực và tạo đơn hàng',style: TextStyle(fontSize: 15),),
             ),
             body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Address for delivery'),
-                          FlatButton(
-                            child: Text(
-                              'Edit',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyAddressEdit(
-                                          appBloc: widget.appBloc,money: widget.money,products: widget.products,
-                                        )),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child:
-                          list.length != 0 ? AddressItem(widget.address) : Container(),
-                    ),
-                  ],
+                Container(
+                  margin: EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Địa chỉ giao hàng',style: TextStyle(fontSize: 13.0,fontWeight: FontWeight.w600)),
+                      FlatButton(
+                        child: Text(
+                          'Sửa',
+                          style: TextStyle(color: Colors.blue,fontSize: 13),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyAddressEdit(
+                                      appBloc: widget.appBloc,money: widget.money,products: widget.products,
+                                    )),
+                          );
+                        },
+                      )
+                    ],
+                  ),
                 ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      height: 40.0,
-                      child: Card(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text('Ship fee :'),
-                            Text(ship.toString()),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: Card(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text('Tổng cộng: '),
-                            Text(widget.money.toString()),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                Divider(),
+                Container(
+                  width: double.infinity,
+                  child:
+                      list.length != 0 ? AddressItem(widget.address) : Container(),
                 ),
               ],
             ),
-            bottomNavigationBar: MaterialButton(
-              child: Text(
-                'Đặt Hàng',
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+            bottomNavigationBar: Container(
+              height: 120,
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                        height: 40.0,
+                        child: ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('Tổng cộng: '),
+                              Text((widget.money+30000).toString(),style: TextStyle(color: Colors.red,fontSize: 13),),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                  Container(
+                    margin: EdgeInsets.only(left: 20.0,right: 20.0),
+                    child: MaterialButton(
+                      child: Text(
+                        'Đặt Hàng',
+                        style: TextStyle(fontSize: 15.0, color: Colors.white),
+                      ),
+                      height: 40.0,
+                      minWidth: double.infinity,
+                      elevation: 0,
+                      color: Color.fromARGB(170, 0, 204, 204),
+                      onPressed: () {
+                        print(widget.address.receiver);
+                        print(widget.address.phone_number);
+                        widget.creatOder
+                            .creatOrders(widget.address, widget.products,widget.appBloc.getAccessToken())
+                            .then((onValue) {
+                          showDialog(
+                              context: context, child : AddItemDialog(message: onValue));
+                          if (onValue == 'success') viewModel.removeAll();
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-              height: 50.0,
-              minWidth: double.infinity,
-              color: Color.fromARGB(150, 7, 239, 204),
-              onPressed: () {
-                print(widget.address.receiver);
-                print(widget.address.phone_number);
-                widget.creatOder
-                    .creatOrders(widget.address, widget.products,widget.appBloc.getAccessToken())
-                    .then((onValue) {
-                  showDialog(
-                      context: context, child : AddItemDialog(message: onValue));
-                  if (onValue == 'success') viewModel.removeAll();
-                });
-              },
             ),
           ));
 }

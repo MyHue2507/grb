@@ -4,7 +4,6 @@ import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:bigdeals2/app_bloc.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 
 class ProductDetails extends StatefulWidget {
   AppBloc appBloc;
@@ -29,10 +28,10 @@ class ProductDetailsState extends State<ProductDetails> {
    widget.detail.fetchProductDetail(widget.product.id).then((onValue){
      widget.product = onValue ;
    }) ;
-   if(widget.product.image_list == null) 
-      widget.product.image_list = List();
-   widget.product.image_list?.add(widget.product.avatar_image);
-   print(widget.product.image_list);
+  //  if(widget.product.image_list == null) 
+  //     widget.product.image_list = List();
+  //  widget.product.image_list?.add(widget.product.avatar_image);
+  //  print(widget.product.image_list);
     super.initState();
     controller = new TextEditingController();
   }
@@ -48,8 +47,9 @@ class ProductDetailsState extends State<ProductDetails> {
         converter: (Store<AppStateCart> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) => Scaffold(
               appBar: AppBar(
+                centerTitle: true,
                 backgroundColor: Color.fromARGB(150, 7, 239, 204),
-                title: Text(widget.product.name),
+                title: Text(widget.product.name,style: TextStyle(fontSize: 13)),
               ),
               body: ListView(
                 children: <Widget>[
@@ -57,45 +57,45 @@ class ProductDetailsState extends State<ProductDetails> {
                     height: 300.0,
                     width: double.infinity,
                     padding: EdgeInsets.only(
-                        left: 20.0, top: 10.0, right: 20.0, bottom: 10.0),
+                        left: 10.0, top: 10.0, right: 10.0, bottom: 10.0),
                     decoration: BoxDecoration(color: Colors.blueGrey[100]),
-                    child: Carousel(
-                    //  boxFit: BoxFit.cover,
-                      images: widget.product.image_list
-                          .map((list) => NetworkImage(list))
-                          .toList(),
-                    ),
+                    // child: Carousel(
+                    //     boxFit: BoxFit.cover,
+                    //     images: widget.product.image_list
+                    //         .map((url) => NetworkImage(url))
+                    //         .toList(),
+                    //   )
+                    child: Image.network(widget.product.avatar_image),
                   ),
                   Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Text(widget.product.name,
                         style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0)),
+                            fontSize: 15.0)),
                   ),
+                  // Container(
+                  //   height: 50.0,
+                  //   width: 30.0,
+                  //   child: TextField(
+                  //     controller: controller,
+                  //     decoration: InputDecoration(
+                  //         hintText: 'Số lượng mua',
+                  //         border: OutlineInputBorder(
+                  //             borderRadius: BorderRadius.circular(20.0))),
+                  //   ),
+                  // ),
                   Container(
-                    height: 50.0,
-                    width: 30.0,
-                    child: TextField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                          hintText: 'Số lượng mua',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0))),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           widget.product.price_deal.toString(),
                           style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0),
+                              color: Color.fromARGB(150, 7, 239, 204),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15.0),
                         ),
                         Row(
                           children: <Widget>[
@@ -104,7 +104,7 @@ class ProductDetailsState extends State<ProductDetails> {
                               widget.product.amount_sale.toString() +
                                   '/' +
                                   widget.product.amount_target.toString(),
-                              style: TextStyle(color: Colors.grey),
+                              style: TextStyle(color: Colors.grey,fontSize: 12),
                             ),
                           ],
                         ),
@@ -112,25 +112,31 @@ class ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: 20.0),
+                      padding: EdgeInsets.only(left: 10.0),
                       child: Text(
                         widget.product.price.toString(),
                         style: TextStyle(
                             color: Colors.grey,
                             fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 10.0,
                             decoration: TextDecoration.lineThrough),
                       )),
+                  Divider(),
                   Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: new HtmlView(data: widget.product.description),
-                  ),
+                    margin: EdgeInsets.only(left: 10.0),
+                    child: Text("Chi tiết sản phẩm",style: TextStyle(fontSize: 13.0,fontWeight: FontWeight.w600),)),
+                  Divider(),
+                  Container(
+                      margin: EdgeInsets.all(10.0),
+                      child: HtmlView(data:'''${ widget.product.description}''',padding: EdgeInsets.all(0),),
+                    ),
                 ],
               ),
               bottomNavigationBar: Material(
                 child: MaterialButton(
-                  child: Text('ADD TO CART'),
+                  elevation: 0,
+                  child: Text('Mua Ngay',style: TextStyle(color: Colors.white,fontSize: 15),),
                   height: 50.0,
                   minWidth: double.infinity,
                   color: Color.fromARGB(150, 7, 239, 204),
@@ -146,7 +152,7 @@ class ProductDetailsState extends State<ProductDetails> {
                           context: context,
                           child: AddItemDialog(message: value));
                       if (value == 'success') {
-                        widget.product.quantity = int.parse(controller.text);
+                        widget.product.quantity = 1;
                         viewModel.onAddItem(widget.product);
                       }
                     });

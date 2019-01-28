@@ -105,13 +105,18 @@ class AppBloc {
       if (json.decode(response.body)["message"] == "success") {
         _accessTokenRegister =
             json.decode(response.body)["data"]["access_token"];
+                    _accessTokenLogin =
+            json.decode(response.body)["data"]["access_token"];
         isLoading = true;
         check = 1;
         saveLogged();
+       saveaccessToken();
       } else {
+        _accessTokenLogin ='null' ;
         isLoading = false;
         check = 1;
         saveLogged();
+        saveaccessToken();
       }
       updateUser(AppState(isLoading));
       return _accessTokenRegister;

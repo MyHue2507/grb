@@ -34,12 +34,14 @@ class _ListItemState extends State<ListItem> {
         _loadingState = LoadingState.DONE;
         categary.addAll(nextCategary);
         _isLoading = false;
-        if (_pageSize != 5) {
-          _pageSize++;
-        } else {
-          _currentPage++;
-          _pageSize = 1;
-        }
+        // if (_pageSize != 20) {
+        //   _pageSize++;
+        // } else {
+        //   _currentPage++;
+        //   _pageSize = 1;
+        // }
+        // if(_currentPage!)
+        _currentPage++;
       });
     } catch (e) {
       _isLoading = false;
@@ -84,6 +86,13 @@ class _ListItemState extends State<ListItem> {
         return CustomScrollView(
           slivers: [
           //  SilverAppBar(),
+          SliverList(
+              delegate: SliverChildListDelegate([
+                Container(
+                  height: 105,
+                ),
+              ]),
+            ),
             SliverList(
               delegate: SliverChildListDelegate([
                 SliderImage(),

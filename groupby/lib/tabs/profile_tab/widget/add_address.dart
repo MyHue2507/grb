@@ -37,40 +37,46 @@ class AddAddressState extends State<AddAddress> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(150, 7, 239, 204),
-        title: Text('Change Password'),
-      ),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(170, 0, 204, 204),
+        title: Text('Thêm địa chỉ',style: TextStyle(fontSize: 15,),
+      ),),
       body: Container(
-        padding: EdgeInsets.all(50.0),
-        child: Column(
+        padding: EdgeInsets.all(15.0),
+        child: ListView(
           children: <Widget>[
             TextField(
                 controller: _receiver,
                 decoration: InputDecoration(
-                  hintText: 'Receiver',
+                  hintText: 'Tên',hintStyle: TextStyle(fontSize: 12),
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 )),
             TextField(
               controller: _address,
               decoration: InputDecoration(
-                hintText: 'Address',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                hintText: 'Địa chỉ',hintStyle: TextStyle(fontSize: 12)
+,                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               ),
             ),
             TextField(
               controller: _phoneNumber,
               decoration: InputDecoration(
-                hintText: 'Phone Number',
+                hintText: 'Số điện thoại',hintStyle: TextStyle(fontSize: 12),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 50.0),
+              margin: EdgeInsets.only(top: 20.0,left: 85.0,right: 85.0),
+              width: 60,
+              height: 50,
+              color: Color.fromARGB(170, 0, 204, 204),
               child: MaterialButton(
-              height: 50.0,
-              minWidth: 200.0,
-              child: Text('Add', style: TextStyle(fontSize: 20.0)),
-              color: Color.fromARGB(150, 7, 239, 204),
+              elevation: 0,
+              // height: 50.0,
+              // minWidth: 70.0,
+              child: Text('Gửi', style: TextStyle(fontSize: 15.0,color: Colors.white)),
+              
               onPressed: (() {
                 widget.add.addAddress(_receiver.text, _address.text, _phoneNumber.text,widget.appBloc.getAccessToken()).then((mess){
                   showDialog(context: context,child: AddItemDialog(message: mess,));

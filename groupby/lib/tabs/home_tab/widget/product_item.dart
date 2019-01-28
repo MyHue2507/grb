@@ -79,21 +79,22 @@ class ModelProductsItem extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15.0)),
+                                  fontSize: 14.0)),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 10.0),
                           child: Material(
                             borderRadius: BorderRadius.circular(30.0),
                             child: MaterialButton(
+                              elevation: 0,
                               color: Color.fromARGB(150, 7, 239, 204),
-                              minWidth: 20.0,
-                              height: 30.0,
+                              minWidth: 15.0,
+                              height: 28.0,
                               highlightColor: Colors.grey,
                               child: Text(
                                 'MUA NGAY',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 12.0),
+                                    color: Colors.white, fontSize: 10.0),
                               ),
                               onPressed: () {
                                 Navigator.push(
@@ -123,8 +124,8 @@ class ModelProductsItem extends StatelessWidget {
                           product.price_deal.toString(),
                           style: TextStyle(
                               color: Color.fromARGB(150, 7, 239, 204),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13.0),
                         ),
                         Container(
                           width: 20.0,
@@ -147,7 +148,7 @@ class ModelProductsItem extends StatelessWidget {
                           product.amount_sale.toString() +
                               '/' +
                               product.amount_target.toString(),
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Colors.grey,fontSize: 10),
                         ),
                       ],
                     ),

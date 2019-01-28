@@ -35,9 +35,10 @@ class LoggedScreenState extends State<LoggedScreen> {
  Widget build(BuildContext context) {
    return Scaffold(
      appBar: AppBar(
+       centerTitle: true,
        elevation: 0,
        backgroundColor: Color.fromARGB(170, 0, 204, 204),
-       title: Text('Profile'),
+       title: Text('Tài Khoản',style: TextStyle(fontSize: 15),),
      ),
      body: ListView(
        children: <Widget>[
@@ -58,7 +59,7 @@ class LoggedScreenState extends State<LoggedScreen> {
              MyAddress(
                appBloc: widget.appBloc,
              )),
-         _buildRow('Orders History', null),
+        //  _buildRow('Orders History', null),
          FlatButton(
            padding: EdgeInsets.only(top: 30),
            child: Text(
