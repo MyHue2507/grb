@@ -25,6 +25,10 @@ class _SliderImageState extends State<SliderImage>
   @override
   Widget build(BuildContext context) {
     Widget carousel = new Carousel(
+      dotSize: 5.0,
+      dotSpacing: 10.0,
+      dotBgColor: Colors.white.withOpacity(0.0),
+      overlayShadow: false,
       boxFit: BoxFit.cover,
       images: _slide.map((url) => NetworkImage(url.source)).toList(),
     );

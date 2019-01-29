@@ -14,6 +14,7 @@ class ProductsItem {
   int quantity ;
   // List<ImageProductDetail> image_list;
     // List<String> image_list;
+  
   ProductsItem(
       {this.id,
       this.name,

@@ -84,6 +84,7 @@ class ModelProductsItem extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(left: 10.0),
                           child: Material(
+                          color: Colors.white,                            
                             borderRadius: BorderRadius.circular(30.0),
                             child: MaterialButton(
                               elevation: 0,

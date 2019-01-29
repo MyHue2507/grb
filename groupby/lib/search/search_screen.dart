@@ -107,6 +107,7 @@ class SearchScreenState extends State<SearchScreen> {
                   // },
                   onSubmitted: _search,
                     decoration: (InputDecoration(
+                      border: InputBorder.none,
                         suffixIcon: Icon(
             Icons.search,
             size: 15.0,
